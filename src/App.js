@@ -1,7 +1,5 @@
-import React, { lazy } from 'react';
-// import Counter from './features/counter/Counter';
-// import CounterNew from './features/counterNew/CounterNew';
-// import Header from './components/Header';
+import { lazy, Suspense } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 
 const Counter = lazy(() => import('./features/counter/Counter'));
 const Header = lazy(() => import('./components/Header'));
@@ -9,11 +7,16 @@ const CounterNew = lazy(() => import('./features/counterNew/CounterNew'));
 
 export default function App() {
   return (
-    <div>
-      <h2>Test</h2>
-      <Header/>
-      <Counter />
-      <CounterNew/>
-    </div>
+    <BrowserRouter>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route path="/" element={<p>Home</p>} />
+          <Route path="/about" element={<p>About</p>} />
+          <Route path="/header" element={<Header />} />
+          <Route path="/counter1" element={<Counter />} />
+          <Route path="/counter2" element={<CounterNew />} />
+        </Routes>
+      </Suspense>
+    </BrowserRouter>
   );
 }
