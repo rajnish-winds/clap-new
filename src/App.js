@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
 
 const Counter = lazy(() => import('./features/counter/Counter'));
 const Header = lazy(() => import('./components/Header'));
