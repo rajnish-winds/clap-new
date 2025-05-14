@@ -1,18 +1,19 @@
 const webpack = require('webpack');
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const TerserPlugin = require("terser-webpack-plugin");
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 const isDevelopment = process.env.NODE_ENV === 'development';
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
-  entry: "./src/index.js",
+  entry: './src/index.js',
   output: {
-    path: path.resolve(__dirname, "dist"),
-    publicPath: "/", // important for React Router
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/', // important for React Router
     filename: isDevelopment ? '[name].js' : '[name].[contenthash].js',
     clean: true,
   },
@@ -20,14 +21,14 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/, // supports both .js and .jsx
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader',
           options: {
             presets: [
-              ["@babel/preset-env", { targets: "defaults" }],
-              ["@babel/preset-react", { runtime: "automatic" }],
+              ['@babel/preset-env', { targets: 'defaults' }],
+              ['@babel/preset-react', { runtime: 'automatic' }],
             ],
           },
         },
@@ -36,7 +37,15 @@ module.exports = {
         test: /\.css$/,
         use: [
           isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
-          "css-loader",
+          'css-loader',
+        ],
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        use: [
+          isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
+          'css-loader',
+          'sass-loader',
         ],
       },
       {
@@ -72,9 +81,10 @@ module.exports = {
   },
 
   plugins: [
+    new Dotenv(),
     new HtmlWebpackPlugin({
-      template: "./public/index.html",
-      filename: "index.html",
+      template: './public/index.html',
+      filename: 'index.html',
       minify: !isDevelopment && {
         collapseWhitespace: true,
         removeComments: true,
@@ -82,7 +92,7 @@ module.exports = {
       },
     }),
     new MiniCssExtractPlugin({
-      filename: isDevelopment ? "[name].css" : "[name].[contenthash].css",
+      filename: isDevelopment ? '[name].css' : '[name].[contenthash].css',
     }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
