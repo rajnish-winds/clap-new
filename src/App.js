@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
+import Navbar from './components/Navbar/Navbar';
 const Counter = lazy(() => import('./features/counter/Counter'));
 const Header = lazy(() => import('./components/Header/Header'));
 const CounterNew = lazy(() => import('./features/counterNew/CounterNew'));
@@ -9,6 +10,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Header />
+      <Navbar />
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           {/* <Route path="/" element={<Home />} /> */}
