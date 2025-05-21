@@ -14,3 +14,11 @@ body {
   background-color: #f8f9fa;
   color: #212529;
 }
+
+.contentWrapper {
+  min-height: calc(100vh - 273px);
+  background-image: url('../assets/loginBackground.jpg');
+  background-size: cover;
+  padding: 10px 5%;
+  position: relative;
+}

@@ -34,18 +34,44 @@ module.exports = {
         },
       },
       {
-        test: /\.css$/,
+        test: /\.module\.scss$/,
         use: [
           isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
-          'css-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: {
+                localIdentName: isDevelopment
+                  ? '[name]__[local]--[hash:base64:5]'
+                  : '[hash:base64]',
+                exportLocalsConvention: 'camelCaseOnly',
+              },
+              sourceMap: isDevelopment,
+              importLoaders: 1,
+            },
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: isDevelopment,
+            },
+          },
         ],
       },
       {
-        test: /\.s[ac]ss$/i,
+        test: /\.scss$/,
+        exclude: /\.module\.scss$/,
         use: [
           isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
           'css-loader',
           'sass-loader',
+        ],
+      },
+      {
+        test: /\.css$/,
+        use: [
+          isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
+          'css-loader',
         ],
       },
       {
@@ -104,12 +130,15 @@ module.exports = {
       directory: path.join(__dirname, 'public'),
     },
     historyApiFallback: true,
-    port: 8000,
+    port: 8001,
     open: true,
     hot: true,
     compress: true,
     client: {
-      overlay: true,
+      overlay: {
+        errors: true,
+        warnings: false,
+      },
     },
   },
 

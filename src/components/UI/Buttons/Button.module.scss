@@ -1,0 +1,19 @@
+.customButton {
+  background-color: #459236;
+  color: white;
+  padding: 10px 80%;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #36762c;
+  }
+
+  &:disabled {
+    background-color: #a9cba4;
+    cursor: not-allowed;
+  }
+}
